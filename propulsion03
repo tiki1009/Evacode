@@ -1,0 +1,49 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from math import *
+
+# create linear space
+N = 50
+xStart,xEnd = 0,1.25
+x = np.linspace(xStart,xEnd,N)
+
+
+# friction  funtion
+def FrictionFunction(mach,gamma,A,dA,dx,T0,dT0,Cf,D):
+    dM_square = ((1+((gamma-1)*mach**2)/2)*mach**2)/(1-mach**2)*\
+                ((-2/A)*(dA/dx)) + \
+                (1+gamma*mach**2)*(1/T0)*(dT0/dx) + \
+                (4*gamma*(mach**2)*Cf/D)
+    dx = dx
+    return dM_square,dx
+                
+# Mach number function
+def MachNumberFunction(mach0,i,dM_square_dx,dx):
+
+    MachN = mach0*sqrt(dM_square_dx*dx)
+    
+    return MachN
+    
+# computing the dM_square over dx
+P = 0
+dMsquare = FrictionFunction(0.1,1.4,10,0,dx,300,0,0.5,1)
+p = dMsquare
+
+# computing Mach number
+MachNumber = 0
+for i in xrange(1,100):
+    dMsquarebydx = P
+    Mach = MachNumberFunction(0.1,i,dMsquarebydx,dx)
+    MachNumber = Mach
+    
+        
+    i+1
+
+# plotting
+size = 10
+plt.figure(figsize=(size,10/(xEnd-xStart)*size))
+plt.xlabel('x',fontsize=16)
+plt.ylabel('Mach number',fontsize=16)
+plt.xlim(xStart,xEnd)
+plt.ylim(yStart,yEnd)
+plt.plot(dx,MachNumber)
