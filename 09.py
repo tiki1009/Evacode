@@ -6,7 +6,7 @@ Uinf = 1.0
 
 # definition of the cylinder
 R = 1.0
-theta = np.linspace(0,2*pi,100)
+theta = np.linspace(0,1.5*pi,100)
 xCylinder,yCylinder = R*np.cos(theta),R*np.sin(theta)
 
 # plot cylinder
@@ -59,3 +59,5 @@ plt.legend(['cylinder','panels','end points','center points'],\
             loc='best',prop={'size':16})
 plt.xlim(-1.1,1.1)
 plt.ylim(-1.1,1.1);
+
+plt.show()
