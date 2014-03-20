@@ -68,6 +68,7 @@ velocity = plt.contourf( X,Y,np.sqrt(u**2+v**2),levels=np.linspace(0.0,0.1,10))
 cbar = plt.colorbar(velocity, ticks=[0, 0.05, 0.1], orientation='horizontal')
 cbar.set_label('Velocity magnitude',fontsize=16);
 
+# Infinite line of sources
 # Intergarate \scipy
 from scipy import integrate
 print integrate.quad(lambda x : x**2, 0.0, 1.0)
