@@ -190,16 +190,16 @@ utheta = -2*Uinf*np.sin(theta)-gamma/(2*pi*R)
 Pinf = 0
 rho = 1
 Uinf = 1
-c = gamma/(2*pi*R)
 
-# pressure with vortex
+
+# pressure without vortex
 drag1 = -(Cp*0.5*Uinf**2)*np.sin(theta)*R
 lift1 = (0.5*Cp*Uinf**2)*np.cos(theta)*R
 
-# pressure without vortex
+# pressure with vortex
 drag2 = 4/3*(np.sin(theta))**3+0.2*np.sin(theta)\
-    -c*(np.cos(theta))**2*R*0.5
-lift2 = (c*theta-.5*np.sin(2.*theta)\
+    -gamma/(2*pi*R)*(np.cos(theta))**2*R*0.5
+lift2 = (gamma/(2*pi*R)*theta-.5*np.sin(2.*theta)\
     -3.2*np.cos(theta)+1/3*np.cos(3.0*theta))*R*0.5
 
 
@@ -213,5 +213,7 @@ plt.xlim(theta.min(),theta.max())
 #plt.ylim()
 plt.plot(drag1,lift1,color='red',linewidth=2,linestyle='-')
 plt.plot(drag2,lift2,color='g',linewidth=2,linestyle='-')
+plt.legend(['with vortex','without vortex'],loc='best',prop={'size':16});
+
 
 plt.show()
