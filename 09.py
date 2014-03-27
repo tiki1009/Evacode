@@ -1,15 +1,16 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy import integrate
 from math import *
 
 Uinf = 1.0
 
 # definition of the cylinder
 R = 1.0
-theta = np.linspace(0,1.5*pi,100)
+theta = np.linspace(0,2*pi,100)
 xCylinder,yCylinder = R*np.cos(theta),R*np.sin(theta)
 
-# plot cylinder
+'''# plot cylinder
 size = 4
 plt.figure(num=None,figsize=(size,size))
 plt.grid(True)
@@ -17,7 +18,7 @@ plt.xlim(-1.1,1.1)
 plt.ylim(-1.1,1.1)
 plt.xlabel('x',fontsize=16)
 plt.ylabel('y',fontsize=16)
-plt.plot(xCylinder,yCylinder,c='b',ls='-',lw=2);
+plt.plot(xCylinder,yCylinder,c='b',ls='-',lw=2);'''
 
 class Panel:
     def __init__(self,xa,ya,xb,yb):
@@ -34,7 +35,8 @@ class Panel:
         self.Vt = 0.                # tangential velocity
         self.Cp = 0.                # pressure coefficient
         
-Np = 10 # number of panels around cylinder
+# number of panels around cylinder
+Np = 20 
 
 # defining the end points of the panels
 xb = R*np.cos(np.linspace(0,2*pi,Np+1))
@@ -59,5 +61,69 @@ plt.legend(['cylinder','panels','end points','center points'],\
             loc='best',prop={'size':16})
 plt.xlim(-1.1,1.1)
 plt.ylim(-1.1,1.1);
+
+# Function to evaluate the integral \ blank should be in order
+def I(pi,pj):
+    def func(s):
+        return (+(pi.xc-(pj.xa-sin(pj.beta)*s))*cos(pi.beta)\
+	       +(pi.yc-(pj.ya+cos(pj.beta)*s))*sin(pi.beta))\
+	       /((pi.xc-(pj.xa-sin(pj.beta)*s))**2\
+	       + (pi.yc-(pj.ya+cos(pj.beta)*s))**2)
+    return integrate.quad(lambda s:func(s),0.,pj.length)[0]
+        
+
+A = np.empty((Np,Np),dtype=float)
+for i in range(Np):
+    for j in range(Np):
+        if (i!=j):
+            A[i,j] = 0.5/pi*I(panel[i],panel[j])
+        else:
+            A[i,j] = 0.5
+
+b = -Uinf*np.cos([p.beta for p in panel])
+   
+
+# solve the linear system
+var = np.linalg.solve(A,b)
+for i in range(len(panel)):
+    panel[i].sigma = var[i]
+	
+
+# function to evaluate the integral Iij(zi)
+def J(pi,pj):
+    def func(s):
+	return (-(pi.xc-(pj.xa-sin(pj.beta)*s))*sin(pi.beta)\
+	       +(pi.yc-(pj.ya+cos(pj.beta)*s))*cos(pi.beta))\
+	       /((pi.xc-(pj.xa-sin(pj.beta)*s))**2\
+	       + (pi.yc-(pj.ya+cos(pj.beta)*s))**2)
+    return integrate.quad(lambda s:func(s),0.,pj.length)[0]
+    
+    
+A = np.zeros((Np,Np),dtype=float)
+for i in range(Np):
+    for j in range(Np):
+        if (i!=j):
+            A[i,j] = 0.5/pi*J(panel[i],panel[j])
+            
+B = -Uinf*np.sin([p.beta for p in panel])
+sigma = np.array([p.sigma for p in panel])
+Vt = np.dot(A,sigma) + B
+for i in range(Np):
+    panel[i].Vt = Vt[i]
+   
+for i in range(Np):
+    panel[i].Cp = 1 - (panel[i].Vt/Uinf)**2
+    
+# plotting the coefficient of pressure on the surface
+plt.figure(figsize=(10,6))
+plt.grid(True)
+plt.xlabel('x',fontsize=16)
+plt.ylabel('$C_p$',fontsize=16)
+plt.plot(xCylinder,1-4*(yCylinder/R)**2,c='b',ls='-',lw=1,zorder=1)
+plt.scatter([p.xc for p in panel],[p.Cp for p in panel],c='#CD2305',s=40,zorder=2)
+plt.title('Number of panels : %d'%len(panel),fontsize=16)
+plt.legend(['analytical','source panel method'],loc='best',prop={'size':16})
+plt.xlim(-1.0,1.0)
+plt.ylim(-4.0,2.0);
 
 plt.show()
