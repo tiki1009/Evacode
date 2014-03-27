@@ -64,7 +64,7 @@ def definePanels(N,xp,yp):
                 if (i<Np-2): xEnd,yEnd = xp[i+1],yp[i+1]
                 else: xEnd,yEnd = xp[0],yp[0]
                 dd = sqrt((xStart-xEnd)**2+(yStart-yEnd)**2)
-                if (d+dd<lc): d += dd
+                if (d+dd<lc): d += dd        # +=
                 else: break
         x[j+1] = xStart+(lc-d)/sqrt((xEnd-xStart)**2+(yEnd-yStart)**2)*(xEnd-xStart)
         y[j+1] = yStart+(lc-d)/sqrt((xEnd-xStart)**2+(yEnd-yStart)**2)*(yEnd-yStart)
