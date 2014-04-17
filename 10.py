@@ -4,7 +4,7 @@ from scipy import integrate
 from math import *
 
 # read of the geometry from a data file
-coords = np.loadtxt(fname='/Users/Eva/Documents/ip/code/resources/naca0012.dat')
+coords = np.loadtxt(fname='/Users/Eva/Documents/python/code/resources/naca0012.dat')
 xp,yp = coords[:,0],coords[:,1]
 
 # plotting the geometry
@@ -42,7 +42,7 @@ class Panel:
         self.vt = 0.                                # tangential velocity
         self.Cp = 0.                                # pressure coefficient
 
-# function to descretize the geometry into panels
+# function to descretize the geometry into panels\ len()
 def definePanels(N,xp,yp):
     Np = len(xp)
     length = sum(np.sqrt((xp[1:Np]-xp[0:Np-1])**2+(yp[1:Np]-yp[0:Np-1])**2))
@@ -56,7 +56,7 @@ def definePanels(N,xp,yp):
         xStart,yStart = x[j],y[j]
         xEnd,yEnd = xp[i+1],yp[i+1]
         d = sqrt((xStart-xEnd)**2+(yStart-yEnd)**2)
-        if (d>=lc): d = 0
+        if (d>=lc): d = 0 
         elif (d<lc):
             while (i<Np-1):
                 i += 1
