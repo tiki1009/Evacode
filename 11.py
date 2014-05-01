@@ -3,17 +3,6 @@ import matplotlib.pyplot as plt
 from scipy import integrate
 from math import *
 
-## function to read the coordinates to store into 2 1-D arrays
-#def readGeomtry():
-#    inFile = open('/Users/Eva/Documents/ip/code/resources/naca0012.dat','r')
-#    x,y = [],[]
-#    for line in inFile:
-#        data = line.split()
-#        x.append(float(data[0]))
-#        y.append(float(data[1]))
-#    x,y = np.array(x),np.array(y)
-#    inFile.close()
-#    return x,y
     
 # read of the geometry from a data file
 coords = np.loadtxt(fname='/Users/Eva/Documents/python/code/resources/naca0012.dat')
@@ -248,6 +237,15 @@ print '--> sum of source/sink strengths:',sum([p.sigma*p.length for p in panel])
 # calculation of the lift
 Cl = gamma*sum([p.length for p in panel])/(0.5*freestream.Uinf*(xmax-xmin))
 print '--> Lift coefficient: Cl =',Cl
+
+# function for calculate the velocity field given a mesh grid
+def getVelocityField(panel,freestream,gamma,X,Y):
+    Nx,Ny = X.shape
+    u,v = np.empty((Nx,Ny),dtype=float),np.empty((Nx,Ny),dtype=float)
+    for i in range(Nx):
+        for j in range(Ny):
+            u[i,j] = 
+
 
 
 
