@@ -4,8 +4,7 @@ from math import *
 import matplotlib.pyplot as plt
 
 # read geometry
-coords = np.loadtxt(fname='C:/Users/conans/Dropbox/selfshared/AERODYN/resources/naca0012.dat'
-)
+coords = np.loadtxt(fname='/Users/Eva/Documents/python/code/finalpro/naca0012.dat')
 xp,yp = coords[:,0],coords[:,1]
 
 # classify each panel info
@@ -36,7 +35,7 @@ for i in range(N):
 
 # freestream
 class Freestream:
-	def __inti__(self, Uinf, alpha):
+	def __init__(self, Uinf, alpha):
 		self.Uinf = Uinf
 		self.alpha = alpha*pi/180
 		self.uinf=Uinf*cos(alpha*pi/180)
@@ -71,7 +70,7 @@ for i in range(N-1):
         else:
             A[i,j]=0.5
             
-# creat RHS 
+# create RHS 
 b=np.empty((N,1),dtype=float)
 for i in range(N):
     b[i]=-freestream.uinf*panel[i].xc-freestream.vinf*panel[i].yc
