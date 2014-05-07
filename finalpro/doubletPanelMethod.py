@@ -55,9 +55,9 @@ plt.show()
 
 # doublet potential 
 def PHICD(mu,xci,yci,pj):
-	 xR=cos(panel.beta)*(panel.xb-panel.xa)-sin(panel.beta)*(panel.yb-panel.ya)
-	 x=cos(panel.beta)*(xci-panel.xa)-sin(panel.beta)*(yci-panel.ya)
-	 y=sin(panel.beta)*(xci-panel.xa)+cos(panel.beta)*(yci-panel.ya)
+	 xR=cos(Panel.beta)*(Panel.xb-panel.xa)-sin(Panel.beta)*(Panel.yb-Panel.ya)
+	 x=cos(Panel.beta)*(xci-Panel.xa)-sin(Panel.beta)*(yci-Panel.ya)
+	 y=sin(Panel.beta)*(xci-Panel.xa)+cos(Panel.beta)*(yci-Panel.ya)
 	 phi = -(mu/(2*pi))*((atan2(y,x-xR))-(atan2(y,x)))
 	 return phi
 
