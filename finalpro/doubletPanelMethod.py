@@ -18,7 +18,7 @@ class Panel:
 		self.yc = (ya+yb)/2				# panel points 
 		self.length = sqrt((xb-xa)**2+(yb-ya)**2)	# panel length
 		self.beta = np.arctan((yb-ya)/(xb-xa))		# panel orientation
-
+		
 		self.mu = 0. 		# strength
 		self.vt = 0.  			# tangential velocity
 		self.cp = 0. 			# cp
@@ -46,11 +46,11 @@ alpha = 5.0
 freestream = Freestream(Uinf,alpha)
 
 
-# plot air airfoil panels
-plt.grid(True)
-plt.plot(xp,yp,'k-',linewidth=2)
-plt.title('Airfoil')
-plt.show()
+## plot air airfoil panels
+#plt.grid(True)
+#plt.plot(xp,yp,'k-',linewidth=2)
+#plt.title('Airfoil')
+#plt.show()
 
 
 # doublet potential 
